@@ -17,6 +17,36 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   }
 });
 
+// Hero slideshow
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+
+if (slides.length > 1) {
+  let current = 0;
+
+  function goToSlide(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      clearInterval(timer);
+      goToSlide(i);
+      timer = setInterval(advance, 5000);
+    });
+  });
+
+  function advance() {
+    goToSlide((current + 1) % slides.length);
+  }
+
+  let timer = setInterval(advance, 5000);
+}
+
 // Contact form submission
 const form = document.getElementById('contact-form');
 if (form) {
